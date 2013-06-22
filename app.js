@@ -68,12 +68,12 @@ http.createServer(app).listen(app.get('port'), function(){
  * CRON JOB
  */
 
-// var newReflection = require('cron').CronJob;
-// new newReflection('0 0 3 * * *', function(){
-// 	reflections.fetch();
-// }, null, true, "Europe/Bratislava");
-// 
-// var newNotification = require('cron').CronJob;
-// new newNotification('0 0 3 * * *', function(){
-// 	notifications.sendReflection();
-// }, null, true, "Europe/Bratislava");
+var newReflection = require('cron').CronJob;
+new newReflection('0 0 3 * * *', function(){
+	reflections.fetch();
+}, null, true, "Europe/Bratislava");
+
+var newNotification = require('cron').CronJob;
+new newNotification('0 0 4 * * *', function(){
+	notifications.sendReflection();
+}, null, true, "Europe/Bratislava");
