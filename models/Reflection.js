@@ -22,9 +22,9 @@ ReflectionModelSchema.statics.getReflection = function(reflectionId, cb){
     this.model('ReflectionModel').findById(reflectionId, cb);
   }
   else {
-    var d = new Date();
-    d.setHours(0,0,0,0);
-    this.model('ReflectionModel').findOne( {"date": {"$gte": d}} , cb);
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    this.model('ReflectionModel').findOne( {"date": {"$gte": today}} , cb);
   }
 };
 
