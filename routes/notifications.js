@@ -6,6 +6,7 @@
 var UserModel = require('../models/User.js');
 var ReflectionModel = require('../models/Reflection.js');
 var error = require('../lib/error');
+var config = require('../config') || {};
 
 exports.sendReflection = function(req, res, next){
   UserModel.find(function(err, users){
@@ -31,8 +32,8 @@ var sendEmail = function(users, reflection){
   var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-        user: "citanienadnes@gmail.com",
-        pass: "userpass"
+      user: config.email || "citanienadnes@gmail.com",
+      pass: config.emailpass || "password"
     }
   });
 

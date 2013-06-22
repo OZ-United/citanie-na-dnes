@@ -28,6 +28,25 @@ exports.query = function(req, res, next){
   });
 };
 
+exports.create = function(req, res, next){    
+  var user = {};
+  user.name = req.body.name;
+  user.email = req.body.email;
+
+  new UserModel(user).save(function(err, user){
+    if (err) {
+      if (err.code == 11000 || err.code == 11001) {
+        return next(new error.DuplicateIndex('User with this email already exists.'));
+      }
+      else {
+        return next(err);
+      }
+    }
+    console.log(user);
+    res.json(user);
+  });
+};
+
 exports.remove = function(req, res, next){
   UserModel.findById(req.params.userId, function(err, user){
     if (err) { return next(error); }

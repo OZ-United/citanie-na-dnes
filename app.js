@@ -53,10 +53,12 @@ app.get('/reflections/:reflectionId', reflections.get);
 app.delete('/reflections/:reflectionId', reflections.remove);
 
 app.get('/users', users.query);
+app.post('/users', users.create);
 app.put('/users/:userId', users.query);
 app.delete('/users/:userId', users.remove);
 
-app.get('/notifications/reflection/:reflectionId', notifications.sendReflection);
+app.post('/notifications/reflections/last', notifications.sendReflection);
+app.post('/notifications/reflections/:reflectionId', notifications.sendReflection);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
