@@ -4,6 +4,7 @@
  */
 
 var ReflectionModel = require('../models/Reflection.js');
+var error = require('../lib/error');
 
 exports.fetch = function(req, res, next){
   var jsdom = require("jsdom");
@@ -23,7 +24,14 @@ exports.fetch = function(req, res, next){
       reflection.thought = $($(articleDOM[0]).find('strong')[2]).text().replace(/(\s)/g, ' ').trim();
 
       new ReflectionModel(reflection).save(function(err, reflection){
-        if (err) return next(err);
+        if (err) {
+          if (err.code == 11000 || err.code == 11001) {
+            return next(new error.DuplicateIndex('Reflection already exists.'));
+          }
+          else {
+            return next(err);
+          }
+        }
         console.log(reflection);
         req && res && res.json(reflection);
       });

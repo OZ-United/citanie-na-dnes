@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-// var error = require('../lib/error');
+var error = require('../lib/error');
 
 var UserModelSchema = new Schema({
   email:  { type: String, index: { unique: true, sparse: true }, required: true, lowercase: true, trim: true},

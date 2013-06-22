@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-// var error = require('../lib/error');
+var error = require('../lib/error');
 
 var ReflectionModelSchema = new Schema({
   html:     { type: String, required: true},
