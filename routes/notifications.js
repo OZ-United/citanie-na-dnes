@@ -6,6 +6,7 @@
 var UserModel = require('../models/User.js');
 var ReflectionModel = require('../models/Reflection.js');
 var error = require('../lib/error');
+var nodemailer = require("nodemailer");
 var config = require('../config') || {};
 
 exports.sendReflection = function(req, res, next){
@@ -24,10 +25,15 @@ exports.sendReflection = function(req, res, next){
 };
 
 var sendEmail = function(users, reflection){
-  console.log(users);
-  console.log(reflection);
 
-  var nodemailer = require("nodemailer");
+  if (!users.length) {
+    return false;
+  }
+
+  var emailaddresses = users[0].email;
+  for (var i=1; i<users.length;i++) {
+    emailaddresses += ', ' + users[i].email;
+  }
 
   var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
@@ -38,12 +44,14 @@ var sendEmail = function(users, reflection){
   });
 
   var mailOptions = {
-    from: "Chlieb nás každodenný <citanienadnes@gmail.com>",
+    from: "Čítanie na dnes <citanienadnes@gmail.com>",
     to: "citanienadnes@gmail.com",
-    bcc: "citanienadnes@gmail.com",
+    bcc: emailaddresses,
     subject: "Chlieb náš každodenný",
     html: reflection.html
   };
+
+  console.log(mailOptions);
 
   smtpTransport.sendMail(mailOptions, function(error, response){
     if (error){
