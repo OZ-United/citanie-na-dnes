@@ -31,6 +31,8 @@ exports.query = function(req, res, next){
 exports.remove = function(req, res, next){
   UserModel.findById(req.params.userId, function(err, user){
     if (err) { return next(error); }
+    if (! user) { return next(new error.NotFound('User does not exist.')); }
+
     user.remove(function(err, user){
       if (err) return next(err);
       res.send(204);
@@ -41,7 +43,7 @@ exports.remove = function(req, res, next){
 exports.update = function(req, res, next){
   UserModel.findById(req.params.userId, function(err, user){
     if (err) { return next(error); }
-    if (! event) { return next(new error.NotFound('User does not exist.')); }
+    if (! user) { return next(new error.NotFound('User does not exist.')); }
     
     user.name = req.body.name;
     user.email = req.body.email;

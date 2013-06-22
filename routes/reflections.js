@@ -39,3 +39,29 @@ exports.fetch = function(req, res, next){
     }
   );
 };
+
+exports.query = function(req, res, next){
+  ReflectionModel.find(function(err, reflections){
+    if (err) { return next(error); }
+    res.json(reflections);
+  });
+};
+
+exports.get = function(req, res, next){
+  ReflectionModel.findById(req.params.reflectionId, function(err, reflection){
+    if (err) { return next(error); }
+    if (! reflection) { return next(new error.NotFound('Reflection does not exist.')); }
+    res.json(reflection);
+  });
+};
+
+exports.remove = function(req, res, next){
+  ReflectionModel.findById(req.params.reflectionId, function(err, reflection){
+    if (err) { return next(error); }
+    if (! reflection) { return next(new error.NotFound('Reflection does not exist.')); }
+    reflection.remove(function(err, reflection){
+      if (err) return next(err);
+      res.send(204);
+    });
+  });
+};

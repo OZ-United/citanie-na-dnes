@@ -43,9 +43,17 @@ db.once('open', function callback () {
 
 var routes = require('./routes');
 var reflections = require('./routes/reflections');
+var users = require('./routes/users');
 
 app.get('/', routes.index);
 app.get('/reflections/fetch', reflections.fetch);
+app.get('/reflections', reflections.query);
+app.get('/reflections/:reflectionId', reflections.get);
+app.delete('/reflections/:reflectionId', reflections.remove);
+
+app.get('/users', users.query);
+app.put('/users/:userId', users.query);
+app.delete('/users/:userId', users.remove);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
