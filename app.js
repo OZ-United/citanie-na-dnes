@@ -1,58 +1,79 @@
-var jsdom = require("jsdom");
-var querystring = require('querystring');
+
+/**
+ * Module dependencies.
+ */
+
+var express = require('express');
 var http = require('http');
+var path = require('path');
+var mongoose = require('mongoose');
 
-var article = '';
-var post_data;
-var post_options;
-var post_req;
+var app = express();
 
-var sendMail = function(article) {
-	console.log('send mail');
-	post_data = querystring.stringify({
-		'article' : article
-	});
+// all environments
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
 
-	post_options = {
-		host: 'www.example.com',
-		port: '80',
-		path: '/baptist/mail.php',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Content-Length': post_data.length
-		}
-	};
+// development only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+}
 
-	post_req = http.request(post_options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function (chunk) {
-			console.log('Response: ' + chunk);
-		});
-	});
+/**
+ * MONGODB CONNECTION
+ */
 
-	post_req.write(post_data);
-	post_req.end();
-};
+mongoose.connect('mongodb://localhost/citanie-na-dnes');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Mongo connection error:'));
+db.once('open', function callback () {
+	console.log('Mongo connection opened');
+});
 
-jsdom.env(
-	"http://baptist.sk/chlieb-nas-kazdodenny",
-	["http://code.jquery.com/jquery.js"],
-	function (errors, window) {
-		var $ = window.$;
+/**
+ * HTTP SERVER AND ROUTES
+ */
 
-		var articleDOM = window.$(".mainbody table div");
-		article = $(articleDOM[0]).html();
+var routes = require('./routes');
+var reflections = require('./routes/reflections');
+var users = require('./routes/users');
+var notifications = require('./routes/notifications');
 
-		console.log(article);
-		sendMail(article);
-	}
-);
+app.get('/', routes.index);
+app.get('/reflections/fetch', reflections.fetch);
+app.get('/reflections', reflections.query);
+app.get('/reflections/:reflectionId', reflections.get);
+app.delete('/reflections/:reflectionId', reflections.remove);
 
-var port = process.env.PORT || 3000;
-console.log(port);
-http.createServer(function (req, res) {
-	res.writeHead(200);
-	var html = '<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"></head><body>' + article + '</body></html>';
-	res.end(html + "\n");
-}).listen(port);
+app.get('/users', users.query);
+app.post('/users', users.create);
+app.put('/users/:userId', users.query);
+app.delete('/users/:userId', users.remove);
+
+app.post('/notifications/reflections/last', notifications.sendReflection);
+app.post('/notifications/reflections/:reflectionId', notifications.sendReflection);
+
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
+
+/**
+ * CRON JOB
+ */
+
+var newReflection = require('cron').CronJob;
+new newReflection('0 0 3 * * *', function(){
+	reflections.fetch();
+}, null, true, "Europe/Bratislava");
+
+var newNotification = require('cron').CronJob;
+new newNotification('0 0 4 * * *', function(){
+	notifications.sendReflection();
+}, null, true, "Europe/Bratislava");
