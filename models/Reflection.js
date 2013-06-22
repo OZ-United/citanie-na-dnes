@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var ReflectionModelSchema = new Schema({
   html:     { type: String, required: true},
-  strdate:  { type: String, required: true},
+  strdate:  { type: String, index: { unique: true, sparse: true }, required: true},
   date:     { type: Date, default: Date.now },
   title:    { type: String, required: true},
   thought:  { type: String, required: true}
