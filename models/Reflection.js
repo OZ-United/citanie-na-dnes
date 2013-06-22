@@ -17,4 +17,15 @@ ReflectionModelSchema.virtual("reflectionId").get(function(){
   return this.id;
 });
 
+ReflectionModelSchema.statics.getReflection = function(reflectionId, cb){
+  if (reflectionId) {
+    this.model('ReflectionModel').findById(reflectionId, cb);
+  }
+  else {
+    var d = new Date();
+    d.setHours(0,0,0,0);
+    this.model('ReflectionModel').findOne( {"date": {"$gte": d}} , cb);
+  }
+};
+
 module.exports = mongoose.model('ReflectionModel', ReflectionModelSchema);

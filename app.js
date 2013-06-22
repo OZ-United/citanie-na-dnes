@@ -44,6 +44,7 @@ db.once('open', function callback () {
 var routes = require('./routes');
 var reflections = require('./routes/reflections');
 var users = require('./routes/users');
+var notifications = require('./routes/notifications');
 
 app.get('/', routes.index);
 app.get('/reflections/fetch', reflections.fetch);
@@ -55,6 +56,8 @@ app.get('/users', users.query);
 app.put('/users/:userId', users.query);
 app.delete('/users/:userId', users.remove);
 
+app.get('/notifications/reflection/:reflectionId', notifications.sendReflection);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
@@ -64,6 +67,11 @@ http.createServer(app).listen(app.get('port'), function(){
  */
 
 // var newReflection = require('cron').CronJob;
-// new newReflection('0 0 */1 * * *', function(){
+// new newReflection('0 0 3 * * *', function(){
 // 	reflections.fetch();
+// }, null, true, "Europe/Bratislava");
+// 
+// var newNotification = require('cron').CronJob;
+// new newNotification('0 0 3 * * *', function(){
+// 	notifications.sendReflection();
 // }, null, true, "Europe/Bratislava");
