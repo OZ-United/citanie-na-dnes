@@ -2,7 +2,7 @@
 
 Daily email service with new a reflection.
 
-Stack: node.js and mongoDB
+Stack: node.js, mongoDB, gmail SMTP
 
 ## API
 
@@ -53,7 +53,7 @@ Stack: node.js and mongoDB
 
 ## config.js
 
-You can create a configuration file with a sender email address in a root directory.
+You can create a configuration file with a sender gmail email address in a root directory.
 
     var config = {};
     
