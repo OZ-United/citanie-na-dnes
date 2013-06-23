@@ -6,7 +6,7 @@ Stack: node.js and mongoDB
 
 ## API
 
-- User
+### User
 
     GET /users
     - query all users
@@ -28,7 +28,7 @@ Stack: node.js and mongoDB
     DELETE /users/:userId
     - remove a user
 
-- Reflection
+### Reflection
 
     GET /reflections
     - query all reflections
@@ -42,13 +42,25 @@ Stack: node.js and mongoDB
     DELETE /reflections/:reflectionId
     - remove a reflection
 
-- Notification
+### Notification
 
     POST /notifications/reflections/last
     - send an email with the latest reflection to all users
 
     POST /notifications/reflections/:reflectionId
     - send an email with a reflection to all users
+
+
+## config.js
+
+You can create a configuration file with a sender email address in a root directory.
+
+    var config = {};
+    
+    config.email = 'citanienadnes@gmail.com';
+    config.emailpass = 'password';
+    
+    module.exports = config;
 
 # License
 
