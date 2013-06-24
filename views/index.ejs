@@ -6,23 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Čítanie na dnes</title>
     <style>
-      body {
+
+      * {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
-
+      }
+      .reflection {
         width: 100%;
         max-width: 1200px;
         margin: auto auto;
         padding: 5%;
       }
+
+      @media print {
+        .title {
+          display: none;
+        }
+
+        .pagination {
+          page-break-before: always;
+        }
+      }
     </style>
   </head>
   <body>
-    <h1><center>Čítanie na dnes</center></h1>
-    
-    <section>
-      <%- reflection %>
-    </section>
+        
+    <% for (var i=0; i<reflections.length; i++) { %>
+
+      <div class="reflection">   
+      
+        <h1 class="title"><center>Čítanie na dnes</center></h1>
+             
+        <section>
+          <%- reflections[i].html %>
+        </section>
+      </div>
+      
+      <% if (i+1 !== reflections.length) { %>
+        <div class="pagination"></div>
+      <% } %>
+    <% } %>
   </body>
 </html>
