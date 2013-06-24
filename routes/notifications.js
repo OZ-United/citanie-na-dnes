@@ -13,12 +13,18 @@ exports.sendReflection = function(req, res, next){
   UserModel.find(function(err, users){
   if (err) { return next(error); }
 
-    ReflectionModel.getReflection(req.params.reflectionId, function(err, reflection){
+    var reflectionId;
+
+    if (req && req.params) {
+      reflectionId = req.params.reflectionId;
+    }
+
+    ReflectionModel.getReflection(reflectionId, function(err, reflection){
       if (err) { return next(error); }
       if (! reflection) { return next(new error.NotFound('Reflection does not exist.')); }
 
       sendEmail(users, reflection);
-      res.send(200);
+      res && res.send(200);
 
     });
   });
