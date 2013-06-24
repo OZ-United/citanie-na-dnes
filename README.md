@@ -2,11 +2,11 @@
 
 Daily email service with new a reflection.
 
-Stack: node.js and mongoDB
+Stack: node.js, mongoDB, gmail SMTP
 
 ## API
 
-- User
+### User
 
     GET /users
     - query all users
@@ -28,7 +28,7 @@ Stack: node.js and mongoDB
     DELETE /users/:userId
     - remove a user
 
-- Reflection
+### Reflection
 
     GET /reflections
     - query all reflections
@@ -42,13 +42,44 @@ Stack: node.js and mongoDB
     DELETE /reflections/:reflectionId
     - remove a reflection
 
-- Notification
+### Notification
 
     POST /notifications/reflections/last
     - send an email with the latest reflection to all users
 
     POST /notifications/reflections/:reflectionId
     - send an email with a reflection to all users
+
+
+## config.js
+
+You can create a configuration file with a sender gmail email address in a root directory.
+
+    var config = {};
+    
+    config.email = 'citanienadnes@gmail.com';
+    config.emailpass = 'password';
+    
+    module.exports = config;
+
+## Deployment
+
+You need mongod service running and have forever module installed, then run:
+
+    forever start citanie-na-dnes.js 
+
+To view list of running tastk type
+
+    forever list
+
+    info:    Forever processes running
+    data:        uid  command                        script             forever pid  logfile                           uptime     
+    data:    [0] KlUJ /home/user/local/bin/node citanie-na-dnes.js 4716    4718 /home/user/.forever/KlUJ.log 0:0:0:6.95
+
+
+To stop server type:
+
+    forever stop 0
 
 # License
 
