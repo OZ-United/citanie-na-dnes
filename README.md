@@ -53,10 +53,10 @@ Stack: node.js, mongoDB, gmail SMTP
 
 ## Configuration
 
-You can set environment variables:
-    - PORT
-    - EMAIL - notification sender gmail address
-    - PASS - gmail password
+You can set environment variables:  
+- PORT
+- EMAIL - notification sender gmail address
+- PASS - gmail password
 
 ## Deployment
 
