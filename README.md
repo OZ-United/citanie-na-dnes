@@ -51,22 +51,18 @@ Stack: node.js, mongoDB, gmail SMTP
     - send an email with a reflection to all users
 
 
-## config.js
+## Configuration
 
-You can create a configuration file with a sender gmail email address in a root directory.
-
-    var config = {};
-    
-    config.email = 'citanienadnes@gmail.com';
-    config.emailpass = 'password';
-    
-    module.exports = config;
+You can set environment variables:
+    - PORT
+    - EMAIL - notification sender gmail address
+    - PASS - gmail password
 
 ## Deployment
 
 You need mongod service running and have forever module installed, then run:
 
-    forever start citanie-na-dnes.js 
+    PORT=3000 EMAIL=citanienadnes@gmail.com PASS=password forever start citanie-na-dnes.js 
 
 To view list of running tastk type
 
