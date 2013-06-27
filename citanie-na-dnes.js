@@ -75,6 +75,6 @@ new newReflection('0 0 3 * * *', function(){
 }, null, true, "Europe/Bratislava");
 
 var newNotification = require('cron').CronJob;
-new newNotification('0 0 4 * * *', function(){
+new newNotification('0 0 5 * * *', function(){
 	notifications.sendReflection();
 }, null, true, "Europe/Bratislava");
