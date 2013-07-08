@@ -6,7 +6,9 @@ angular.module('dashboardApp')
 
   $scope.addUser = function(){
     if ($scope.addUserForm.$valid) {
-      $scope.users.push($scope.user);
+      Users.create(function(user){
+        $scope.users.push(user);
+      });
       $scope.user = {};
     }
   };
