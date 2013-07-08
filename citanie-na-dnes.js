@@ -48,6 +48,17 @@ var reflections = require('./routes/reflections');
 var users = require('./routes/users');
 var notifications = require('./routes/notifications');
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  }
+  else {
+    next();
+  }
+});
+
 app.get('/', routes.index);
 app.get('/reflections/fetch', reflections.fetch);
 app.get('/reflections', reflections.query);
