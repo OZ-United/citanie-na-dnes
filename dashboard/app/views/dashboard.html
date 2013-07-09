@@ -1,12 +1,12 @@
-<section>
-  <h4>Zoznam odberateľov</h4>
+<section style="margin: 50px auto;">
+  <h4 style="text-align: center;margin: 50px auto;">Zoznam odberateľov</h4>
   <table class="table">
     <thead>
       <tr>
         <th>Foto</th>
         <th>E-mail</th>
         <th>Meno</th>
-        <th>Edit</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -15,7 +15,6 @@
         <td style="line-height: 50px;">{{user.email}}</td>
         <td style="line-height: 50px;">{{user.name}}</td>
         <td style="line-height: 50px;">
-          <button class="btn btn-link">upraviť</button>
           <button class="btn btn-link" ng-click="removeUser(user)">vymazať</button>
         </td>
       </tr>
@@ -23,8 +22,9 @@
   </table>
 </section>
 
-<section>
-  <h4>Nový odberateľ</h4>
+<section style="margin: 50px auto;">
+  <h4 style="text-align: center;margin: 50px auto;">Nový odberateľ</h4>
+  <div style="width: 500px; margin: 0 auto;">
   <form class="form-horizontal" ng-submit="addUser()" name="addUserForm">
     <div class="control-group">
     <label class="control-label" for="inputEmail">Email</label>
@@ -42,8 +42,9 @@
 
     <div class="control-group">
     <div class="controls">
-    <button type="submit" class="btn btn-succes">Pridať</button>
+    <button type="submit" class="btn btn-success">Pridať</button>
     </div>
     </div>
   </form>
+  </div>
 </section>
