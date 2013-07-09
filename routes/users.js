@@ -28,7 +28,7 @@ exports.query = function(req, res, next){
   });
 };
 
-exports.create = function(req, res, next){    
+exports.create = function(req, res, next){
   var user = {};
   user.name = req.body.name;
   user.email = req.body.email;

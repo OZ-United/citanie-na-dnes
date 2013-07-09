@@ -8,13 +8,21 @@ var error = require('../lib/error');
 
 exports.fetch = function(req, res, next){
   var jsdom = require("jsdom");
+  var fs = require("fs");
+  var jquery = fs.readFileSync(process.cwd() + "/lib/jquery.js", "utf-8");
 
-  jsdom.env(
-    "http://baptist.sk/chlieb-nas-kazdodenny",
-    ["http://code.jquery.com/jquery.js"],
-    function (errors, window) {
+  jsdom.env({
+    url: "http://baptist.sk/chlieb-nas-kazdodenny",
+    src: [jquery],
+    done: function (errors, window) {
+      if (errors) {
+        return next(errors);
+      }
+      if (!window) {
+        return next(new error.HttpResponseError('baptist.sk connection error'));
+      }
+
       var $ = window.$;
-
       var articleDOM = window.$(".mainbody table div");
 
       var reflection = {};
@@ -37,7 +45,7 @@ exports.fetch = function(req, res, next){
       });
 
     }
-  );
+  });
 };
 
 exports.query = function(req, res, next){

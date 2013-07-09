@@ -5,7 +5,7 @@ var error = require('../lib/error');
 var ReflectionModelSchema = new Schema({
   html:     { type: String, required: true},
   strdate:  { type: String, index: { unique: true, sparse: true }, required: true},
-  date:     { type: Date, default: Date.now },
+  date:     { type: Date, default: Date.now, index: {} },
   title:    { type: String, required: true},
   thought:  { type: String, required: true}
 },{
@@ -33,6 +33,19 @@ ReflectionModelSchema.statics.getReflection = function(reflectionId, cb){
       cb(null, reflections[0]);
     });
   }
+};
+
+ReflectionModelSchema.statics.getTodayReflection = function(cb){
+  var today = new Date();
+  today.setHours(0,0,0,0);
+
+  this.model('ReflectionModel')
+  .find({date: {$gte: today}}, function(err, reflections) {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, reflections[0]);
+  });
 };
 
 module.exports = mongoose.model('ReflectionModel', ReflectionModelSchema);
