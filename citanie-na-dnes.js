@@ -61,6 +61,8 @@ app.all('/*', function(req, res, next) {
 });
 
 app.get('/', routes.index);
+app.get('/dashboard', routes.dashboard);
+
 app.get('/reflections/fetch', reflections.fetch);
 app.get('/reflections', reflections.query);
 app.get('/reflections/:reflectionId', reflections.get);
