@@ -7,11 +7,12 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
+var ltld = require('local-tld-update');
 
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 0);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
@@ -47,7 +48,21 @@ var reflections = require('./routes/reflections');
 var users = require('./routes/users');
 var notifications = require('./routes/notifications');
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  }
+  else {
+    next();
+  }
+});
+
 app.get('/', routes.index);
+app.get('/dashboard', routes.dashboard);
+
 app.get('/reflections/fetch', reflections.fetch);
 app.get('/reflections', reflections.query);
 app.get('/reflections/:reflectionId', reflections.get);
@@ -59,10 +74,13 @@ app.put('/users/:userId', users.query);
 app.delete('/users/:userId', users.remove);
 
 app.post('/notifications/reflections/last', notifications.sendReflection);
+app.post('/notifications/reflections/today', notifications.sendTodayReflection);
 app.post('/notifications/reflections/:reflectionId', notifications.sendReflection);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+var server = http.createServer(app);
+server.listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + server.address().port);
+  ltld.update("citanie-na-dnes", server.address().port);
 });
 
 /**
@@ -76,5 +94,5 @@ new newReflection('0 0 3 * * *', function(){
 
 var newNotification = require('cron').CronJob;
 new newNotification('0 0 5 * * *', function(){
-	notifications.sendReflection();
+	notifications.sendTodayReflection();
 }, null, true, "Europe/Bratislava");

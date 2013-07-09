@@ -29,6 +29,21 @@ exports.sendReflection = function(req, res, next){
   });
 };
 
+exports.sendTodayReflection = function(req, res, next){
+  UserModel.find(function(err, users){
+  if (err) { return next(error); }
+
+    ReflectionModel.getTodayReflection(function(err, reflection){
+      if (err) { return next(error); }
+      if (! reflection) { return next(new error.NotFound('Reflection for today does not exist.')); }
+
+      sendEmail(users, reflection);
+      res && res.send(200);
+
+    });
+  });
+};
+
 var sendEmail = function(users, reflection){
 
   if (!users.length) {
