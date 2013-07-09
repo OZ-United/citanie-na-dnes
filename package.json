@@ -1,14 +1,14 @@
 {
   "name": "citanie-na-dnes",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
-    "start": "node app.js"
+    "start": "node citanie-na-dnes.js"
   },
   "dependencies": {
     "express": "3.2.6",
     "mongoose": ">= 3.6.9",
     "ejs": "*",
-    "jsdom": "*",
+    "jsdom": ">= 0.7.0",
     "time": "*",
     "cron": "*",
     "nodemailer": "*",

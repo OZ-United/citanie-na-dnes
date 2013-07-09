@@ -72,6 +72,7 @@ app.put('/users/:userId', users.query);
 app.delete('/users/:userId', users.remove);
 
 app.post('/notifications/reflections/last', notifications.sendReflection);
+app.post('/notifications/reflections/today', notifications.sendTodayReflection);
 app.post('/notifications/reflections/:reflectionId', notifications.sendReflection);
 
 var server = http.createServer(app);
@@ -91,5 +92,5 @@ new newReflection('0 0 3 * * *', function(){
 
 var newNotification = require('cron').CronJob;
 new newNotification('0 0 5 * * *', function(){
-	notifications.sendReflection();
+	notifications.sendTodayReflection();
 }, null, true, "Europe/Bratislava");
