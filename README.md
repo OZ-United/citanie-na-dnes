@@ -2,7 +2,7 @@
 
 Daily email service with new a reflection.
 
-Stack: node.js, mongoDB, gmail SMTP
+MEAN Stack: mongoDB, express, AngularJS, node.js + gmail SMTP
 
 ## API
 
