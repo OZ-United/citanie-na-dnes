@@ -35,7 +35,7 @@ exports.sendTodayReflection = function(req, res, next){
 
     ReflectionModel.getTodayReflection(function(err, reflection){
       if (err) { return next(error); }
-      if (! reflection) { return next(new error.NotFound('Reflection for today does not exist.')); }
+      if (! reflection) { return next ? next(new error.NotFound('Reflection for today does not exist.')) : false; }
 
       sendEmail(users, reflection);
       res && res.send(200);
