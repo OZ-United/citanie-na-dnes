@@ -88,7 +88,8 @@ server.listen(app.get('port'), function(){
  */
 
 var newReflection = require('cron').CronJob;
-new newReflection('0 0 3 * * *', function(){
+new newReflection('0 */5 3-4 * * *', function(){
+  console.log('cron');
 	reflections.fetch();
 }, null, true, "Europe/Bratislava");
 
