@@ -37,16 +37,20 @@ exports.sendTodayReflection = function(req, res, next){
       if (err) { return next(error); }
       if (! reflection) { return next ? next(new error.NotFound('Reflection for today does not exist.')) : false; }
 
-      sendEmail(users, reflection);
+      sendEmail(users, reflection, 0);
       res && res.send(200);
 
     });
   });
 };
 
-var sendEmail = function(users, reflection){
+var sendEmail = function(users, reflection, r){
 
   if (!users.length) {
+    return false;
+  }
+
+   if (r > 100) {
     return false;
   }
 
@@ -74,14 +78,17 @@ var sendEmail = function(users, reflection){
   console.log(mailOptions);
 
   smtpTransport.sendMail(mailOptions, function(error, response){
+    smtpTransport.close();
+
     if (error){
         console.log(error);
+        setTimeout(function(){
+          sendEmail(users, reflection, r+1);
+        }, 60000);
     }
     else{
         console.log("Message sent: " + response.message);
     }
-
-    smtpTransport.close();
   });
 
 };
