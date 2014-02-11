@@ -43,4 +43,8 @@ angular.module('dashboardApp')
       console.log('ok');
     });
   };
+
+  $scope.sortFunction = function(user) {
+    return user.name.split(' ').reverse().join(' ');
+  };
 });
