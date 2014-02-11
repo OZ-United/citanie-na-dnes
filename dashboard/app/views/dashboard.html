@@ -11,12 +11,24 @@
     </thead>
     <tbody>
       <tr ng-repeat="user in users">
+
         <td><img ng-src="{{user.gravatar}}" alt=""></td>
-        <td style="line-height: 50px;">{{user.email}}</td>
-        <td style="line-height: 50px;">{{user.name}}</td>
         <td style="line-height: 50px;">
-          <button class="btn btn-link" ng-click="removeUser(user)">vymazať</button>
+          <span ng-hide="user.edit">{{user.email}}</span>
+          <span ng-show="user.edit"><input type="email" ng-model="user.email"></span>
         </td>
+        <td style="line-height: 50px;">
+          <span ng-hide="user.edit">{{user.name}}</span>
+          <span ng-show="user.edit"><input type="text" ng-model="user.name"></span>
+        </td>
+        <td style="line-height: 50px;">
+          <button class="btn btn-link" ng-click="user.edit = true" ng-hide="user.edit">upraviť</button>
+          <button class="btn btn-link" ng-click="removeUser(user)" ng-hide="user.edit">vymazať</button>
+
+          <button class="btn btn-link" ng-click="user.edit = false" ng-show="user.edit">zrušiť</button>
+          <button class="btn btn-link" ng-click="saveUser(user)" ng-show="user.edit">uložiť</button>
+        </td>
+
       </tr>
     </tbody>
   </table>

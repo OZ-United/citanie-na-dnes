@@ -29,7 +29,7 @@ exports.query = function(req, res, next){
 };
 
 exports.edit = function(req, res, next){
-  UserModel.findById(req.userId, function(err, user){
+  UserModel.findById(req.params.userId, function(err, user){
     if (err) { return next(error); }
     if (!user) { return next(new error.NotFound('User does not exist.')); }
 
