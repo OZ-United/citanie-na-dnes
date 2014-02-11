@@ -70,7 +70,7 @@ app.delete('/reflections/:reflectionId', reflections.remove);
 
 app.get('/users', users.query);
 app.post('/users', users.create);
-app.put('/users/:userId', users.query);
+app.put('/users/:userId', users.edit);
 app.delete('/users/:userId', users.remove);
 
 app.post('/notifications/reflections/last', notifications.sendReflection);

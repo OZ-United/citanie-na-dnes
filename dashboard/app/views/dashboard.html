@@ -11,12 +11,24 @@
     </thead>
     <tbody>
       <tr ng-repeat="user in users">
+
         <td><img ng-src="{{user.gravatar}}" alt=""></td>
-        <td style="line-height: 50px;">{{user.email}}</td>
-        <td style="line-height: 50px;">{{user.name}}</td>
         <td style="line-height: 50px;">
-          <button class="btn btn-link" ng-click="removeUser(user)">vymazať</button>
+          <span ng-hide="user.edit">{{user.email}}</span>
+          <span ng-show="user.edit"><input type="email" class="form-control" ng-model="user.email"></span>
         </td>
+        <td style="line-height: 50px;">
+          <span ng-hide="user.edit">{{user.name}}</span>
+          <span ng-show="user.edit"><input type="text" class="form-control" ng-model="user.name"></span>
+        </td>
+        <td style="line-height: 50px;">
+          <button class="btn btn-link" ng-click="user.edit = true" ng-hide="user.edit">upraviť</button>
+          <button class="btn btn-link" ng-click="removeUser(user)" ng-hide="user.edit">vymazať</button>
+
+          <button class="btn btn-link" ng-click="user.edit = false" ng-show="user.edit">zrušiť</button>
+          <button class="btn btn-link" ng-click="saveUser(user)" ng-show="user.edit">uložiť</button>
+        </td>
+
       </tr>
     </tbody>
   </table>
@@ -24,27 +36,24 @@
 
 <section style="margin: 50px auto;">
   <h4 style="text-align: center;margin: 50px auto;">Nový odberateľ</h4>
-  <div style="width: 500px; margin: 0 auto;">
-  <form class="form-horizontal" ng-submit="addUser()" name="addUserForm">
-    <div class="control-group">
-    <label class="control-label" for="inputEmail">Email</label>
-    <div class="controls">
-    <input type="email" ng-model="user.email" id="inputEmail" required>
-    </div>
-    </div>
+  <div style="max-width: 500px; margin: 0 auto;">
+    <form role="form" name="addUserForm" ng-submit="addUser()">
+      <div class="form-group">
+        <label for="inputEmail">Email</label>
+        <input type="email" class="form-control" ng-model="user.email" id="inputEmail" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <label for="inputName">Meno</label>
+        <input type="text" class="form-control" ng-model="user.name" id="inputName" placeholder="Meno">
+      </div>
 
-    <div class="control-group">
-    <label class="control-label" for="inputName">Meno</label>
-    <div class="controls">
-    <input type="text" ng-model="user.name" id="inputName">
-    </div>
-    </div>
-
-    <div class="control-group">
-    <div class="controls">
-    <button type="submit" class="btn btn-success">Pridať</button>
-    </div>
-    </div>
-  </form>
+      <button type="submit" class="btn btn-success">Pridať</button>
+    </form>
   </div>
+</section>
+
+<section class="text-center">
+  <h4 style="text-align: center;margin: 50px auto;">Články</h4>
+  <button class="btn btn-default" ng-click="fetch()">Stiahni článok</button>
+  <button class="btn btn-primary" ng-click="send()">Pošli email</button>
 </section>
