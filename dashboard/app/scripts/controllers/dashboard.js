@@ -13,11 +13,21 @@ angular.module('dashboardApp')
     }
   };
 
+  $scope.saveUser = function(user){
+    Users.update(user,
+      function(){
+        user.edit = false;
+      },
+      function(error){
+        console.log(error);
+      });
+  };
+
   $scope.removeUser = function(user){
     var index = $scope.users.indexOf(user);
     if (index < 0) { return false; }
 
-    Users.remove({'userId': $scope.users[index].userId}, function(){
+    Users.remove({'userId': user.userId}, function(){
       $scope.users.splice(index, 1);
     });
   };
