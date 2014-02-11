@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-.controller('DashboardCtrl', function ($scope, Users) {
+.controller('DashboardCtrl', function ($scope, Users, $http) {
   $scope.users = Users.query();
 
   $scope.addUser = function(){
@@ -29,6 +29,18 @@ angular.module('dashboardApp')
 
     Users.remove({'userId': user.userId}, function(){
       $scope.users.splice(index, 1);
+    });
+  };
+
+  $scope.fetch = function(){
+    $http.get('/reflections/fetch').success(function(){
+      console.log('ok');
+    });
+  };
+
+  $scope.send = function(){
+    $http.post('/notifications/reflections/last').success(function(){
+      console.log('ok');
     });
   };
 });
