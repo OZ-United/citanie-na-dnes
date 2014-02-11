@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('dashboardApp', ['ngResource'])
+angular.module('dashboardApp', ['ngResource', 'ngRoute'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/auth', {
-        templateUrl: '/views/main.html',
+        templateUrl: '/views/auth.html',
         controller: 'MainCtrl'
       })
       .when('/', {
