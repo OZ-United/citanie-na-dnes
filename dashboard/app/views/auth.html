@@ -1,0 +1,15 @@
+<section style="margin: 200px auto; max-width: 300px;">
+
+  <div class="alert alert-danger text-center" ng-cloak ng-show="error">Nepodarilo sa prihlásiť</div>
+
+  <form role="form" ng-submit="login(password)">
+    <div class="form-group">
+      <label for="passwordInput">Heslo</label>
+      <input type="password" class="form-control" id="passwordInput" placeholder="Heslo" required ng-model="password">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Prihlásiť sa</button>
+  </form>
+
+
+</section>
