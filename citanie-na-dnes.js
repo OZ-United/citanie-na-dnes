@@ -12,7 +12,7 @@ var ltld = require('local-tld-update');
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 0);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
@@ -44,6 +44,7 @@ db.once('open', function callback () {
  */
 
 var routes = require('./routes');
+var auth = require('./routes/auth');
 var reflections = require('./routes/reflections');
 var users = require('./routes/users');
 var notifications = require('./routes/notifications');
@@ -63,19 +64,21 @@ app.all('/*', function(req, res, next) {
 app.get('/', routes.index);
 app.get('/dashboard', routes.dashboard);
 
+app.post('/auth', auth.login);
+
 app.get('/reflections/fetch', reflections.fetch);
 app.get('/reflections', reflections.query);
 app.get('/reflections/:reflectionId', reflections.get);
 app.delete('/reflections/:reflectionId', reflections.remove);
 
-app.get('/users', users.query);
-app.post('/users', users.create);
-app.put('/users/:userId', users.edit);
-app.delete('/users/:userId', users.remove);
+app.get('/users', auth.checkHash, users.query);
+app.post('/users', auth.checkHash, users.create);
+app.put('/users/:userId', auth.checkHash, users.edit);
+app.delete('/users/:userId', auth.checkHash, users.remove);
 
-app.post('/notifications/reflections/last', notifications.sendReflection);
-app.post('/notifications/reflections/today', notifications.sendTodayReflection);
-app.post('/notifications/reflections/:reflectionId', notifications.sendReflection);
+app.post('/notifications/reflections/last', auth.checkHash, notifications.sendReflection);
+app.post('/notifications/reflections/today', auth.checkHash, notifications.sendTodayReflection);
+app.post('/notifications/reflections/:reflectionId', auth.checkHash, notifications.sendReflection);
 
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){

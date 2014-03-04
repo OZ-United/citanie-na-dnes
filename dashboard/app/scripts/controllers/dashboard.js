@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-.controller('DashboardCtrl', function ($scope, Users, $http) {
+.controller('DashboardCtrl', function ($scope, Users, $http, Auth) {
   $scope.users = Users.query();
 
   $scope.addUser = function(){
@@ -39,7 +39,7 @@ angular.module('dashboardApp')
   };
 
   $scope.send = function(){
-    $http.post('/notifications/reflections/last').success(function(){
+    $http.post('/notifications/reflections/last', Auth.getCradentials()).success(function(){
       console.log('ok');
     });
   };
