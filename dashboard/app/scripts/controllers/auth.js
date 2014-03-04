@@ -6,8 +6,7 @@ angular.module('dashboardApp')
     $scope.error = false;
 
     Auth.login({'password': password}).then(
-      function(data){
-        console.log(data);
+      function(){
         $location.path('/');
       },
       function(){

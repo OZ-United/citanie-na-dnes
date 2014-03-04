@@ -12,11 +12,10 @@ exports.login = function(req, res, next){
 };
 
 exports.checkHash = function(req, res, next){
-  if (HASH === req.body.hash) {
+  if (req.headers.hash && HASH === req.headers.hash) {
     return next();
   }
   else {
     return next(new error.Forbidden());
   }
-  
 };

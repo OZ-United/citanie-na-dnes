@@ -12,6 +12,7 @@ angular.module('dashboardApp')
         .success(function(res){
           cradentials = res;
           localStorage.setItem(STORAGE_ID, JSON.stringify(res));
+          $http.defaults.headers.common['hash'] = cradentials.hash;
           deferred.resolve(res);
         })
         .error(function(){
@@ -29,6 +30,7 @@ angular.module('dashboardApp')
     logout: function() {
       cradentials = {};
       localStorage.setItem(STORAGE_ID, JSON.stringify({}));
+      $http.defaults.headers.common['hash'] = '';
       return true;
     }
   };
