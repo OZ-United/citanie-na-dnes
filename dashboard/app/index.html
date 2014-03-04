@@ -11,7 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <!-- endbuild -->
+    <style>
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
   </head>
   <body ng-app="dashboardApp">
     <!--[if lt IE 7]>
@@ -32,7 +36,9 @@
 
     <!-- build:js scripts/scripts.js -->
     <script src="/scripts/app.js"></script>
+    <script src="/scripts/services/Auth.js"></script>
     <script src="/scripts/services/Users.js"></script>
+    <script src="/scripts/controllers/auth.js"></script>
     <script src="/scripts/controllers/dashboard.js"></script>
     <!-- endbuild -->
 
