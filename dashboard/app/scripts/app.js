@@ -9,7 +9,32 @@ angular.module('dashboardApp', ['ngResource', 'ngRoute'])
     })
     .when('/', {
       templateUrl: '/views/dashboard.html',
-      controller: 'DashboardCtrl'
+      controller: 'DashboardCtrl',
+      resolve: {
+        users: function($q, $route, Users, Auth, $location){
+          var deferred = $q.defer();
+          if (!Auth.isLoggedIn()) { return deferred.reject(); }
+
+          var logoutSession = function(data){
+            if (data.status === 403) {
+              Auth.logout();
+              $location.path('/auth');
+            }
+          };
+
+          Users.query(
+            function(users){
+              deferred.resolve(users);
+            },
+            function(data){
+              logoutSession(data);
+              deferred.reject();
+            }
+          );
+
+          return deferred.promise;
+        }
+      }
     })
     .otherwise({
       redirectTo: '/'
@@ -20,14 +45,14 @@ angular.module('dashboardApp', ['ngResource', 'ngRoute'])
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
       console.log(next.templateUrl);
       console.log(Auth.isLoggedIn());
-      if ( !Auth.isLoggedIn() ) {
-        if ( next.templateUrl !== 'views/auth.html' ) {
-          $location.path( '/auth' );
+      if (!Auth.isLoggedIn() ) {
+        if (next.templateUrl !== '/views/auth.html') {
+          $location.path('/auth');
         }
       }
       else {
-        if ( next.templateUrl === 'views/auth.html' ) {
-          $location.path( '/' );
+        if (next.templateUrl === '/views/auth.html') {
+          $location.path('/');
         }
       }
     });
