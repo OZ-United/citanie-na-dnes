@@ -62,6 +62,7 @@ app.all('/*', function(req, res, next) {
 });
 
 app.get('/', routes.index);
+app.get('/history', routes.history);
 app.get('/dashboard', routes.dashboard);
 
 app.post('/auth', auth.login);
