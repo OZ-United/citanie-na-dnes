@@ -19,8 +19,13 @@
         padding: 5%;
       }
 
+      .help {
+        width: 300px;
+        margin: 0 auto;
+      }
+
       @media print {
-        .title {
+        .title, .help, nav {
           display: none;
         }
 
@@ -31,6 +36,30 @@
     </style>
   </head>
   <body>
+
+    
+    <nav style="text-align: center;">
+      <%if (home) { %>
+      <a href="/history">História</a> •
+      <% } %>
+      <%if (!home) { %>
+      <a href="/">Domov</a> •
+      <% } %>
+      <a href="/dashboard">Dashboard</a>
+    </nav>
+
+    <%if (!home) { %>
+    <div class="help">
+      <p>Nápoveda na vyhľadávanie podľa parametrov:</p>
+      <ul>
+        <li>presný deň: <code>date=2014-03-05</code></li>
+        <li>začiatočný deň: <code>start=2014-02-01</code></li>
+        <li>koncový deň: <code>end=2014-02-10</code></li>
+      </ul>
+      
+    </div>
+    <% } %>
+    
         
     <% for (var i=0; i<reflections.length; i++) { %>
 
