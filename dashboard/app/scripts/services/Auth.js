@@ -4,6 +4,7 @@ angular.module('dashboardApp')
 .factory('Auth', function ($q, $http, $rootScope) {
   var STORAGE_ID = 'citanie-na-dnes';
   var cradentials = JSON.parse(localStorage.getItem(STORAGE_ID) || '{}');
+  $http.defaults.headers.common['hash'] = cradentials.hash || '';
 
   return {
     login: function (data) {
@@ -12,7 +13,7 @@ angular.module('dashboardApp')
         .success(function(res){
           cradentials = res;
           localStorage.setItem(STORAGE_ID, JSON.stringify(res));
-          $http.defaults.headers.common['hash'] = cradentials.hash;
+          $http.defaults.headers.common['hash'] = cradentials.hash || '';
           deferred.resolve(res);
         })
         .error(function(){

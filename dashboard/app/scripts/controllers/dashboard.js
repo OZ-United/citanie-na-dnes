@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dashboardApp')
-.controller('DashboardCtrl', function ($scope, Users, $http, Auth, $location) {
+.controller('DashboardCtrl', function ($scope, Users, $http, Auth, $location, users) {
 
   var logoutSession = function(data){
     if (data.status === 403) {
@@ -10,12 +10,7 @@ angular.module('dashboardApp')
     }
   };
 
-  $scope.users = Users.query(
-    function(){},
-    function(data){
-      logoutSession(data);
-    }
-  );
+  $scope.users = users;
 
   $scope.addUser = function(){
     if ($scope.addUserForm.$valid) {
