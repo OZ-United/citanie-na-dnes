@@ -8,6 +8,9 @@ var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
 var ltld = require('local-tld-update');
+var util = require('util'),
+var exec = require('child_process').exec,
+var child;
 
 var app = express();
 
@@ -100,4 +103,14 @@ new newReflection('0 */5 3-4 * * *', function(){
 var newNotification = require('cron').CronJob;
 new newNotification('0 0 5 * * *', function(){
 	notifications.sendTodayReflection();
+
+  child = exec('./backup/run.sh', function (error, stdout, stderr) {
+    console.log('backup stdout: ' + stdout);
+    console.log('backup stderr: ' + stderr);
+    if (error !== null) {
+      console.log('backup exec error: ' + error);
+    }
+  });
 }, null, true, "Europe/Bratislava");
+
+
