@@ -62,7 +62,7 @@ You can set environment variables:
 
 You need mongod service running and have forever module installed, then run:
 
-    PORT=3000 EMAIL=citanienadnes@gmail.com PASS=password forever start citanie-na-dnes.js 
+    PORT=3000 EMAIL=citanienadnes@gmail.com PASS=emailPassword PASSWORD=dashboardPassword forever start citanie-na-dnes.js 
 
 To view list of running tastk type
 
@@ -81,4 +81,4 @@ To stop server type:
 
 The MIT License
 
-Copyright (c) 2013 Jan Antala, https://github.com/janantala
+Copyright (c) 2014 Jan Antala, http://www.janantala.com
