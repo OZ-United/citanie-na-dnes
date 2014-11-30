@@ -8,8 +8,8 @@ var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
 var ltld = require('local-tld-update');
-var util = require('util'),
-var exec = require('child_process').exec,
+var util = require('util');
+var exec = require('child_process').exec;
 var child;
 
 var app = express();

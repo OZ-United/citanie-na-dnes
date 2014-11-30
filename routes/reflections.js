@@ -49,12 +49,12 @@ exports.fetch = function(req, res, next){
           });
 
         }
-      });  
+      });
     }
     else {
       return next ? next() : false;
     }
-  }); 
+  });
 };
 
 exports.query = function(req, res, next){
