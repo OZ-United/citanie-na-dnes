@@ -6,8 +6,8 @@ var ReflectionModelSchema = new Schema({
   html:     { type: String, required: true},
   strdate:  { type: String, index: { unique: true, sparse: true }, required: true},
   date:     { type: Date, default: Date.now, index: {} },
-  title:    { type: String, required: true},
-  thought:  { type: String, required: true}
+  title:    { type: String},
+  thought:  { type: String}
 },{
   toObject:  { virtuals: true },
   toJSON:    { virtuals: true }
