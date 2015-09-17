@@ -1,4 +1,4 @@
-FROM node:0.12.7
+FROM node
 
 RUN mkdir /root/app
 ADD . /root/app
