@@ -35,7 +35,8 @@ if ('development' == app.get('env')) {
  * MONGODB CONNECTION
  */
 
-mongoose.connect('mongodb://localhost/citanie-na-dnes');
+var MONGO_DB_CONNECTION = process.env.MONGO_DB_CONNECTION || 'mongodb://localhost/citanie-na-dnes';
+mongoose.connect(MONGO_DB_CONNECTION);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongo connection error:'));
 db.once('open', function callback () {
