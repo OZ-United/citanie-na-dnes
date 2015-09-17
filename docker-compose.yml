@@ -1,9 +1,9 @@
 # run:
 # docker-compose -p united up -d
 
-# PYG-DATA-COLLECTOR
+# CITANIE-NA-DNES
 
-datacollector:
+citanienadnes:
   build: .
   ports:
       - "3000:3000"
