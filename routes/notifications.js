@@ -62,8 +62,8 @@ var sendEmail = function(users, reflection, r){
   var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-      user: process.env.EMAIL || "citanienadnes@gmail.com",
-      pass: process.env.PASS || "password"
+      user: process.env.EMAIL_ADDRESS || "citanienadnes@gmail.com",
+      pass: process.env.EMAIL_PASSWORD || "password"
     }
   });
 
