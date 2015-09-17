@@ -5,6 +5,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "forever": "~0.11.0",
     "express": "3.2.6",
     "mongoose": ">= 3.6.9",
     "ejs": "*",
