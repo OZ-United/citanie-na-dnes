@@ -2,7 +2,7 @@ FROM node:0.12.7
 
 RUN mkdir /root/app
 ADD . /root/app
-RUN cd /root/app; npm install
+RUN cd /root/app; npm install; npm install -g bower; cd dashboard && bower install
 
 EXPOSE 3000
 
