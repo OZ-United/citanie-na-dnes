@@ -31,9 +31,14 @@ exports.fetch = function(req, res, next){
 
           var reflection = {};
           reflection.html = $(articleDOM[0]).html();
-          reflection.strdate = $($(articleDOM[0]).find('strong')[0]).text().replace(/(\s)/g, ' ').trim();
-          reflection.title = $($(articleDOM[0]).find('strong')[1]).text().replace(/(\s)/g, ' ').trim();
-          reflection.thought = $($(articleDOM[0]).find('strong')[2]).text().replace(/(\s)/g, ' ').trim();
+
+          var offset = 0;
+          if (!$($(articleDOM[0]).find('strong')[0]).text().length) {
+            offset = 1;
+          }
+          reflection.strdate = $($(articleDOM[0]).find('strong')[0 + offset]).text().replace(/(\s)/g, ' ').trim();
+          reflection.title = $($(articleDOM[0]).find('strong')[1 + offset]).text().replace(/(\s)/g, ' ').trim();
+          reflection.thought = $($(articleDOM[0]).find('strong')[2 + offset]).text().replace(/(\s)/g, ' ').trim();
 
           new ReflectionModel(reflection).save(function(err, reflection){
             if (err) {
