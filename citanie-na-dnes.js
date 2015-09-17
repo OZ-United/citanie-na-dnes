@@ -7,7 +7,6 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
-var ltld = require('local-tld-update');
 var util = require('util');
 var exec = require('child_process').exec;
 var child;
@@ -88,7 +87,6 @@ app.post('/notifications/reflections/:reflectionId', auth.checkHash, notificatio
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + server.address().port);
-  ltld.update("citanie-na-dnes", server.address().port);
 });
 
 /**

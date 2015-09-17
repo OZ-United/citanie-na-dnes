@@ -11,7 +11,6 @@
     "jsdom": ">= 0.7.0",
     "time": "*",
     "cron": "*",
-    "nodemailer": "*",
-    "local-tld-update": "*"
+    "nodemailer": "*"
   }
 }
