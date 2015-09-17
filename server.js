@@ -102,14 +102,6 @@ new newReflection('0 */5 3-4 * * *', function(){
 var newNotification = require('cron').CronJob;
 new newNotification('0 0 5 * * *', function(){
 	notifications.sendTodayReflection();
-
-  child = exec('./backup/run.sh', function (error, stdout, stderr) {
-    console.log('backup stdout: ' + stdout);
-    console.log('backup stderr: ' + stderr);
-    if (error !== null) {
-      console.log('backup exec error: ' + error);
-    }
-  });
 }, null, true, "Europe/Bratislava");
 
 
