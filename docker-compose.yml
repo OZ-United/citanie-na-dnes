@@ -6,10 +6,11 @@
 citanienadnes:
   build: .
   ports:
-      - "3000:3000"
+    - "3000:3000"
   restart: always
   environment:
     - 'EMAIL_ADDRESS=citanienadnes@gmail.com'
-    - 'EMAIL_PASSWORD=***CHANGE-ME****'
-    - 'MONGO_DB_CONNECTION=***CHANGE-ME****'
+    - 'EMAIL_PASSWORD=***CHANGE-ME***'
+    - 'MONGO_DB_CONNECTION=***CHANGE-ME***'
+    - 'PASSWORD=***CHANGE-ME***'
     - PORT=3000
