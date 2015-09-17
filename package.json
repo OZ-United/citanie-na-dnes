@@ -9,7 +9,7 @@
     "express": "3.2.6",
     "mongoose": ">= 3.6.9",
     "ejs": "*",
-    "jsdom": "3.1.2",
+    "jsdom": "*",
     "time": "*",
     "cron": "*",
     "nodemailer": "0.7.1"
