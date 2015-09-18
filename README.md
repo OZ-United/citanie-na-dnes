@@ -2,83 +2,34 @@
 
 Daily email service with new a reflection.
 
-MEAN Stack: mongoDB, express, AngularJS, node.js + gmail SMTP
-
-## API
-
-### User
-
-    GET /users
-    - query all users
-
-    POST /users
-    - create a new user
-    - post data: 
-      {"name": "Vincent Vega", "email": "vincent.vega@gmail.com"}
-    - return data: 
-      {"userId": "51c7696ffd9a472912000001", "name": "Vincent Vega", "email": "vincent.vega@gmail.com", "gravatar": "http://gravatar.com/avatar/dee5457a060c1acab41e0d22a9c67f30?s=50&amp;d=mm"}
-
-    PUT /users/:userId
-    - update user
-    - post data: 
-      {"userId": "51c7696ffd9a472912000001", "name": "Jules Winnfield", "email": "vincent.vega@gmail.com"}
-    - return data: 
-      {"userId": "51c7696ffd9a472912000001", "name": "Jules Winnfield", "email": "vincent.vega@gmail.com", "gravatar": "http://gravatar.com/avatar/dee5457a060c1acab41e0d22a9c67f30?s=50&amp;d=mm"}
-
-    DELETE /users/:userId
-    - remove a user
-
-### Reflection
-
-    GET /reflections
-    - query all reflections
-
-    GET /reflections/fetch
-    - fetch a new reflection
-
-    GET /reflections/:reflectionId
-    - get a reflection
-
-    DELETE /reflections/:reflectionId
-    - remove a reflection
-
-### Notification
-
-    POST /notifications/reflections/last
-    - send an email with the latest reflection to all users
-
-    POST /notifications/reflections/:reflectionId
-    - send an email with a reflection to all users
-
-
 ## Configuration
 
-You can set environment variables:  
-- PORT
-- EMAIL - notification sender gmail address
-- PASS - gmail password
+We use following environmental variables:
+
+- **EMAIL_ADDRESS** - gmail address
+- **EMAIL_PASSWORD** - email password
+- **MONGO_DB_CONNECTION** - mongo db database connection url with username and password
+- **PASSWORD** - frontend password
+- **PORT** - running port, default *3000*
+
+
+#### Gmail setting
+
+You need to allow following gmail setting:
+
+- https://www.google.com/settings/security/lesssecureapps
+- https://accounts.google.com/DisplayUnlockCaptcha
 
 ## Deployment
 
-You need mongod service running and have forever module installed, then run:
+We use docker container and docker-compose template, to start run
 
-    PORT=3000 EMAIL=citanienadnes@gmail.com PASS=emailPassword PASSWORD=dashboardPassword forever start citanie-na-dnes.js 
-
-To view list of running tastk type
-
-    forever list
-
-    info:    Forever processes running
-    data:        uid  command                        script             forever pid  logfile                           uptime     
-    data:    [0] KlUJ /home/user/local/bin/node citanie-na-dnes.js 4716    4718 /home/user/.forever/KlUJ.log 0:0:0:6.95
-
-
-To stop server type:
-
-    forever stop 0
+```sh
+docker-compose -p united up -d
+```
 
 # License
 
 The MIT License
 
-Copyright (c) 2014 Jan Antala, http://www.janantala.com
+Copyright (c) 2012 - 2015 Jan Antala, http://www.janantala.com
