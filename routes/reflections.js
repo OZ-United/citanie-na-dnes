@@ -20,9 +20,9 @@ exports.fetch = function(req, res, next){
       var options = { url: 'http://baptist.sk/chlieb-nas-kazdodenny' };
 
       curl.request(options, function (err, data) {
-        if (errors) {
-          console.log(errors);
-          return next ? next(errors) : false;
+        if (err) {
+          console.log(err);
+          return next ? next(err) : false;
         }
 
         var jsdom = require('jsdom');
