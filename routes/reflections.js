@@ -52,14 +52,15 @@ exports.fetch = function(req, res, next){
             reflection.strdate = $($(articleDOM[0]).find('strong')[0 + offset]).text().replace(/(\s)/g, ' ').trim();
             reflection.title = $($(articleDOM[0]).find('strong')[1 + offset]).text().replace(/(\s)/g, ' ').trim();
             reflection.thought = $($(articleDOM[0]).find('strong')[2 + offset]).text().replace(/(\s)/g, ' ').trim();
-
+console.log(reflection);
             new ReflectionModel(reflection).save(function(err, reflection){
               if (err) {
                 if (err.code == 11000 || err.code == 11001) {
                   return next(new error.DuplicateIndex('Reflection already exists.'));
                 }
                 else {
-                  return next(err);
+console.log(err);
+                  return next ? next(err) : false;
                 }
               }
               console.log(reflection);
