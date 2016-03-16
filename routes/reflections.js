@@ -27,6 +27,7 @@ exports.fetch = function(req, res, next){
 
         var jsdom = require('jsdom');
         console.log('jsdom env call');
+        console.log(data);
 
         jsdom.env(
             data, ["http://code.jquery.com/jquery.js"],
@@ -40,7 +41,7 @@ exports.fetch = function(req, res, next){
             }
 
             var $ = window.$;
-            var articleDOM = window.$(".mainbody table div");
+            var articleDOM = window.$("#chlieb table div").remove(".dateselector");
 
             var reflection = {};
             reflection.html = $(articleDOM[0]).html();
@@ -52,21 +53,19 @@ exports.fetch = function(req, res, next){
             reflection.strdate = $($(articleDOM[0]).find('strong')[0 + offset]).text().replace(/(\s)/g, ' ').trim();
             reflection.title = $($(articleDOM[0]).find('strong')[1 + offset]).text().replace(/(\s)/g, ' ').trim();
             reflection.thought = $($(articleDOM[0]).find('strong')[2 + offset]).text().replace(/(\s)/g, ' ').trim();
-console.log(reflection);
+            console.log(reflection);
             new ReflectionModel(reflection).save(function(err, reflection){
               if (err) {
                 if (err.code == 11000 || err.code == 11001) {
                   return next(new error.DuplicateIndex('Reflection already exists.'));
                 }
                 else {
-console.log(err);
+                  console.log(err);
                   return next ? next(err) : false;
                 }
               }
-              console.log(reflection);
               req && res && res.json(reflection);
             });
-
         });
       });
     }
