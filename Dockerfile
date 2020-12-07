@@ -7,4 +7,4 @@ RUN cd /root/app; npm install; npm install -g bower; cd dashboard && bower insta
 EXPOSE 3000
 
 WORKDIR /root/app
-CMD ["/root/app/node_modules/.bin/forever","/root/app/server.js"]
+CMD ["/root/app/node_modules/forever/bin/forever","/root/app/server.js"]
